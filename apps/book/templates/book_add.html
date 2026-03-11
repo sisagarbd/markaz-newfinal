@@ -1,0 +1,490 @@
+{% extends layout_path %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}Add Book - Apps{% endblock %}
+
+{% block vendor_css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'vendor/libs/quill/typography.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/quill/katex.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/quill/editor.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/select2/select2.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/dropzone/dropzone.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/flatpickr/flatpickr.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/tagify/tagify.css' %}" />
+{% endblock vendor_css %}
+
+{% block vendor_js %}
+{{ block.super }}
+<script src="{% static 'vendor/libs/quill/katex.js' %}"></script>
+<script src="{% static 'vendor/libs/quill/quill.js' %}"></script>
+<script src="{% static 'vendor/libs/select2/select2.js' %}"></script>
+<script src="{% static 'vendor/libs/dropzone/dropzone.js' %}"></script>
+<script src="{% static 'vendor/libs/jquery-repeater/jquery-repeater.js' %}"></script>
+<script src="{% static 'vendor/libs/flatpickr/flatpickr.js' %}"></script>
+<script src="{% static 'vendor/libs/tagify/tagify.js' %}"></script>
+{% endblock vendor_js %}
+
+{% block page_js %}
+{{ block.super }}
+<script src="{% static 'js/app-ecommerce-product-add.js' %}"></script>
+{% endblock page_js %}
+
+{% block content %}
+<div class="app-ecommerce">
+  <!-- Add Product -->
+  <div
+    class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-6 row-gap-4">
+    <div class="d-flex flex-column justify-content-center">
+      <h4 class="mb-1">Add a new Book</h4>
+    </div>
+    <div class="d-flex align-content-center flex-wrap gap-4">
+      <div class="d-flex gap-4"><button class="btn btn-label-secondary">Discard</button> <button
+          class="btn btn-label-primary">Save draft</button></div>
+      <button type="submit" class="btn btn-primary">Publish product</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- First column-->
+    <div class="col-12 col-lg-8">
+      <!-- Product Information -->
+      <div class="card mb-6">
+        <div class="card-header">
+          <h5 class="card-tile mb-0">Book information</h5>
+        </div>
+        <div class="card-body">
+          <div class="mb-6">
+            <label class="form-label" for="ecommerce-product-name">Book Name</label>
+            <input type="text" class="form-control" id="ecommerce-product-name" placeholder="Book title"
+              name="productTitle" aria-label="Product title" />
+          </div>
+          <div class="row mb-6">
+            <div class="col"><label class="form-label" for="ecommerce-product-sku">ISBN No.</label> <input type="number"
+                class="form-control" id="ecommerce-product-sku" placeholder="ISBN" name="productSku"
+                aria-label="Product SKU" /></div>
+            <div class="col"><label class="form-label" for="ecommerce-product-barcode">Call No.</label> <input
+                type="text" class="form-control" id="ecommerce-product-barcode" placeholder="Call No."
+                name="productBarcode" aria-label="Product barcode" /></div>
+            <div class="col"><label class="form-label" for="ecommerce-product-year">Year.</label> <input type="text"
+                class="form-control" id="ecommerce-product-barcode" placeholder="Call No." name="productBarcode"
+                aria-label="Product barcode" /></div>
+          </div>
+          <div class="row mb-6">
+            <div class="col"><label class="form-label" for="ecommerce-product-sku">DDC No.</label> <input type="number"
+                class="form-control" id="ecommerce-product-sku" placeholder="DDC No." name="productSku"
+                aria-label="Product SKU" /></div>
+            <div class="col"><label class="form-label" for="ecommerce-product-barcode">Date of Inclusion:</label> <input
+                type="text" class="form-control" id="ecommerce-product-barcode" placeholder="Date of Inclusion"
+                name="productBarcode" aria-label="Product barcode" /></div>
+            <div class="col"><label class="form-label" for="ecommerce-product-year">Country.</label> <input type="text"
+                class="form-control" id="ecommerce-product-year" placeholder="Country" name="productYear"
+                aria-label="Product year" /></div>
+          </div>
+          <!-- Description -->
+          <div>
+            <label class="mb-1">Description (Optional)</label>
+            <div class="form-control p-0">
+              <div class="comment-toolbar border-0 border-bottom">
+                <div class="d-flex justify-content-start">
+                  <span class="ql-formats me-0">
+                    <button class="ql-bold"></button>
+                    <button class="ql-italic"></button>
+                    <button class="ql-underline"></button>
+                    <button class="ql-list" value="ordered"></button>
+                    <button class="ql-list" value="bullet"></button>
+                    <button class="ql-link"></button>
+                    <button class="ql-image"></button>
+                  </span>
+                </div>
+              </div>
+              <div class="comment-editor border-0 pb-6" id="ecommerce-category-description"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /Product Information -->
+      <!-- Media -->
+      <div class="card mb-6">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0 card-title">Product Image</h5>
+          <a href="javascript:void(0);" class="fw-medium">Add media from URL</a>
+        </div>
+        <div class="card-body">
+          <form action="/upload" class="dropzone needsclick p-0" id="dropzone-basic">
+            <div class="dz-message needsclick">
+              <p class="h4 needsclick pt-3 mb-2">Drag and drop your image here</p>
+              <p class="h6 text-body-secondary d-block fw-normal mb-2">or</p>
+              <span class="needsclick btn btn-sm btn-label-primary" id="btnBrowse">Browse image</span>
+            </div>
+            <div class="fallback">
+              <input name="file" type="file" />
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- /Media -->
+      <!-- Variants -->
+      <div class="card mb-6">
+        <div class="card-header">
+          <h5 class="card-title mb-0">Variants</h5>
+        </div>
+
+
+        <div class="card-body">
+          <form class="form-repeater">
+            <div data-repeater-list="group-a">
+              <div data-repeater-item>
+                <div class="row g-sm-6 mb-6">
+
+                  <div class="mb-6">
+                    <label class="form-label" for="ecommerce-product-name">Library</label>
+                    <input type="text" class="form-control" id="ecommerce-product-name" placeholder="Library"
+                      name="productTitle" aria-label="Product title" />
+                  </div>
+                  <div class="row mb-6">
+                    <div class="col"><label class="form-label" for="ecommerce-product-sku">Shelf No.</label> <input
+                        type="number" class="form-control" id="ecommerce-product-sku" placeholder="Shelf No."
+                        name="productSku" aria-label="Product SKU" /></div>
+                    <div class="col"><label class="form-label" for="ecommerce-product-barcode">Added By</label> <input
+                        type="text" class="form-control" id="ecommerce-product-barcode" placeholder="Added By"
+                        name="productBarcode" aria-label="Product barcode" /></div>
+
+                  </div>
+
+
+
+
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- /Variants -->
+
+    </div>
+    <!-- /Second column -->
+
+    <!-- Second column -->
+    <div class="col-12 col-lg-4">
+      <!-- Pricing Card -->
+      <div class="card mb-6">
+        <div class="card-header">
+          <h5 class="card-title mb-0">Book Status</h5>
+        </div>
+        <div class="card-body">
+          <!-- Base Price -->
+          <div class="mb-6">
+            <label class="form-label" for="ecommerce-product-price">No of Volume</label>
+            <input type="number" class="form-control" id="ecommerce-product-price" placeholder="Total Volume"
+              name="productPrice" aria-label="Product price" />
+          </div>
+
+          <div class="mb-6">
+            <label class="form-label" for="ecommerce-product-price">No of Edition</label>
+            <input type="number" class="form-control" id="ecommerce-product-edition" placeholder="Total Edition"
+              name="productEdition" aria-label="Product edition" />
+          </div>
+          <!-- Discounted Price -->
+          <div class="mb-6">
+            <label class="form-label" for="ecommerce-product-discount-price">No of Pages</label>
+            <input type="number" class="form-control" id="ecommerce-product-discount-price" placeholder="No of Pages"
+              name="productDiscountedPrice" aria-label="Product discounted price" />
+          </div>
+
+          <!-- Instock switch -->
+          <div class="d-flex justify-content-between align-items-center border-top pt-2">
+            <span class="mb-0">Live Status</span>
+            <div class="w-25 d-flex justify-content-end">
+              <div class="form-check form-switch me-n3">
+                <input type="checkbox" class="form-check-input" checked />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /Pricing Card -->
+      <!-- Organize Card -->
+      <div class="card mb-6">
+        <div class="card-header">
+          <h5 class="card-title mb-0">Organize</h5>
+        </div>
+        <div class="card-body">
+
+          <!-- Category -->
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="mb-6 col ecommerce-select2-dropdown">
+              <label class="form-label mb-1" for="category-org">
+                <span>Category/Topic</span>
+              </label>
+              <select id="category-org" class="select2 form-select" data-placeholder="Select Category">
+                <option value="">Select Category</option>
+                <option value="Household">Catagory 1</option>
+                <option value="Management">Catagory 2</option>
+                <option value="Electronics">Catagory 3</option>
+                <option value="Office">Catagory 4</option>
+                <option value="Automotive">Catagory 5</option>
+              </select>
+            </div>
+            <a href="javascript:void(0);" class="fw-medium btn btn-icon btn-label-primary ms-4"
+              data-bs-toggle="offcanvas" data-bs-target="#offcanvasEcommerceCategoryList"><i
+                class="icon-base ti tabler-plus icon-md"></i></a>
+          </div>
+
+
+          <!-- Publisher -->
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="mb-6 col ecommerce-select2-dropdown">
+              <label class="form-label mb-1" for="publisher-org">
+                <span>Publisher</span>
+              </label>
+              <select id="publisher-org" class="select2 form-select" data-placeholder="Select Publisher">
+                <option value="">Select Publisher</option>
+                <option value="Household">Publisher 1</option>
+                <option value="Management">Publisher 2</option>
+                <option value="Electronics">Publisher 3</option>
+                <option value="Office">Publisher 4</option>
+                <option value="Automotive">Publisher 5</option>
+              </select>
+            </div>
+            <a href="javascript:void(0);" class="fw-medium btn btn-icon btn-label-primary ms-4"
+              data-bs-toggle="offcanvas" data-bs-target="#offcanvasPublisherList"><i
+                class="icon-base ti tabler-plus icon-md"></i></a>
+          </div>
+
+          <!-- Publisher -->
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="mb-6 col ecommerce-select2-dropdown">
+              <label class="form-label mb-1" for="publisher-org">
+                <span>Author</span>
+              </label>
+              <select id="author-org" class="select2 form-select" data-placeholder="Select Author">
+                <option value="">Select Author</option>
+                <option value="Household">Author 1</option>
+                <option value="Management">Author 2</option>
+                <option value="Electronics">Author 3</option>
+                <option value="Office">Author 4</option>
+                <option value="Automotive">Author 5</option>
+              </select>
+            </div>
+            <a href="javascript:void(0);" class="fw-medium btn btn-icon btn-label-primary ms-4"
+              data-bs-toggle="offcanvas" data-bs-target="#offcanvasAuthorList"><i
+                class="icon-base ti tabler-plus icon-md"></i></a>
+          </div>
+
+          <!-- Status -->
+          <div class="mb-6 col ecommerce-select2-dropdown">
+            <label class="form-label mb-1" for="status-org">Status </label>
+            <select id="status-org" class="select2 form-select" data-placeholder="Published">
+              <option value="">Published</option>
+              <option value="Published">Published</option>
+              <option value="Scheduled">Scheduled</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+          </div>
+          <!-- Tags -->
+          <div>
+            <label for="ecommerce-product-tags" class="form-label mb-1">Tags</label>
+            <input id="ecommerce-product-tags" class="form-control" name="ecommerce-product-tags"
+              value="Normal,Standard,Premium" aria-label="Product Tags" />
+          </div>
+        </div>
+      </div>
+      <!-- /Organize Card -->
+    </div>
+    <!-- /Second column -->
+  </div>
+
+
+
+
+
+
+  <!-- Offcanvas to add new customer -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEcommerceCategoryList"
+    aria-labelledby="offcanvasEcommerceCategoryListLabel">
+    <!-- Offcanvas Header -->
+    <div class="offcanvas-header py-6">
+      <h5 id="offcanvasEcommerceCategoryListLabel" class="offcanvas-title">Add Category</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <!-- Offcanvas Body -->
+    <div class="offcanvas-body border-top">
+      <form class="pt-0" id="eCommerceCategoryListForm" onsubmit="return true">
+        <!-- Title -->
+        <div class="mb-6 form-control-validation">
+          <label class="form-label" for="ecommerce-category-title">Title</label>
+          <input type="text" class="form-control" id="ecommerce-category-title" placeholder="Enter category title"
+            name="categoryTitle" aria-label="category title" />
+        </div>
+        <!-- Slug -->
+        <div class="mb-6 form-control-validation">
+          <label class="form-label" for="ecommerce-category-slug">Catagory Slug</label>
+          <input type="text" id="ecommerce-category-slug" class="form-control" placeholder="Enter slug"
+            aria-label="slug" name="slug" />
+        </div>
+
+        <!-- Description -->
+        <div class="mb-6">
+          <label class="form-label">Description</label>
+          <div class="form-control p-0 py-1">
+            <div class="comment-editor border-0" id="ecommerce-category-description"></div>
+            <div class="comment-toolbar border-0 rounded">
+              <div class="d-flex justify-content-end">
+                <span class="ql-formats me-0">
+                  <button class="ql-bold"></button>
+                  <button class="ql-italic"></button>
+                  <button class="ql-underline"></button>
+                  <button class="ql-list" value="ordered"></button>
+                  <button class="ql-list" value="bullet"></button>
+                  <button class="ql-link"></button>
+                  <button class="ql-image"></button>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit and reset -->
+        <div class="mb-6">
+          <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">Add</button>
+          <button type="reset" class="btn btn-label-danger" data-bs-dismiss="offcanvas">Discard</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+  <!-- Offcanvas to add new Author -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAuthorList"
+    aria-labelledby="offcanvasEcommerceCategoryListLabel">
+    <!-- Offcanvas Header -->
+    <div class="offcanvas-header py-6">
+      <h5 id="offcanvasEcommerceCategoryListLabel" class="offcanvas-title">Author Name</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <!-- Offcanvas Body -->
+    <div class="offcanvas-body border-top">
+      <form class="pt-0" id="eCommerceCategoryListForm" onsubmit="return true">
+        <!-- Title -->
+        <div class="mb-6 form-control-validation">
+          <label class="form-label" for="ecommerce-category-title">Author Name</label>
+          <input type="text" class="form-control" id="ecommerce-category-title" placeholder="Enter Author Name"
+            name="categoryTitle" aria-label="category title" />
+        </div>
+        <!-- Slug -->
+        <div class="mb-6 form-control-validation">
+          <label class="form-label" for="ecommerce-category-slug">Author Slug</label>
+          <input type="text" id="ecommerce-category-slug" class="form-control" placeholder="Enter slug"
+            aria-label="slug" name="slug" />
+        </div>
+
+        <!-- Description -->
+        <div class="mb-6">
+          <label class="form-label">Description</label>
+          <div class="form-control p-0 py-1">
+            <div class="comment-editor border-0" id="ecommerce-category-description"></div>
+            <div class="comment-toolbar border-0 rounded">
+              <div class="d-flex justify-content-end">
+                <span class="ql-formats me-0">
+                  <button class="ql-bold"></button>
+                  <button class="ql-italic"></button>
+                  <button class="ql-underline"></button>
+                  <button class="ql-list" value="ordered"></button>
+                  <button class="ql-list" value="bullet"></button>
+                  <button class="ql-link"></button>
+                  <button class="ql-image"></button>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit and reset -->
+        <div class="mb-6">
+          <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">Add</button>
+          <button type="reset" class="btn btn-label-danger" data-bs-dismiss="offcanvas">Discard</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <!-- Offcanvas to add new Publisher -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasPublisherList"
+    aria-labelledby="offcanvasEcommerceCategoryListLabel">
+    <!-- Offcanvas Header -->
+    <div class="offcanvas-header py-6">
+      <h5 id="offcanvasEcommerceCategoryListLabel" class="offcanvas-title">Add Publisher</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <!-- Offcanvas Body -->
+    <div class="offcanvas-body border-top">
+      <form class="pt-0" id="eCommerceCategoryListForm" onsubmit="return true">
+        <!-- Title -->
+        <div class="mb-6 form-control-validation">
+          <label class="form-label" for="ecommerce-category-title">Publisher Title</label>
+          <input type="text" class="form-control" id="ecommerce-category-title" placeholder="Enter Publisehr title"
+            name="categoryTitle" aria-label="category title" />
+        </div>
+        <!-- Slug -->
+        <div class="mb-6 form-control-validation">
+          <label class="form-label" for="ecommerce-category-slug">Slug</label>
+          <input type="text" id="ecommerce-category-slug" class="form-control" placeholder="Enter slug"
+            aria-label="slug" name="slug" />
+        </div>
+
+        <!-- Description -->
+        <div class="mb-6">
+          <label class="form-label">Description</label>
+          <div class="form-control p-0 py-1">
+            <div class="comment-editor border-0" id="ecommerce-category-description"></div>
+            <div class="comment-toolbar border-0 rounded">
+              <div class="d-flex justify-content-end">
+                <span class="ql-formats me-0">
+                  <button class="ql-bold"></button>
+                  <button class="ql-italic"></button>
+                  <button class="ql-underline"></button>
+                  <button class="ql-list" value="ordered"></button>
+                  <button class="ql-list" value="bullet"></button>
+                  <button class="ql-link"></button>
+                  <button class="ql-image"></button>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit and reset -->
+        <div class="mb-6">
+          <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">Add</button>
+          <button type="reset" class="btn btn-label-danger" data-bs-dismiss="offcanvas">Discard</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+
+
+</div>
+
+{% endblock %}
