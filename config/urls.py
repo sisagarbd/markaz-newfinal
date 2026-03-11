@@ -7,8 +7,6 @@ from web_project.views import SystemView
 urlpatterns = [
     path("admin/", admin.site.urls),
 
-    # Dashboard urls
-    path("", include("apps.dashboards.urls")),
 
 
     # layouts urls
