@@ -1,0 +1,199 @@
+{% extends layout_path %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}Books{% endblock title %}
+
+{% block vendor_css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'vendor/libs/datatables-bs5/datatables.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/sweetalert2/sweetalert2.css' %}" />
+{% endblock vendor_css %}
+
+{% block vendor_js %}
+{{ block.super }}
+<script src="{% static 'vendor/libs/moment/moment.js' %}"></script>
+<script src="{% static 'vendor/libs/datatables-bs5/datatables-bootstrap5.js' %}"></script>
+<script src="{% static 'vendor/libs/sweetalert2/sweetalert2.js' %}"></script>
+{% endblock vendor_js %}
+
+{% block page_js %}
+{{ block.super }}
+<script src="{% static 'js/cat_list.js' %}"></script>
+<script src="{% static 'js/transactions-delete.js' %}"></script>
+{% endblock page_js %}
+
+{% block content %}
+
+
+<!-- Transactions Toast -->
+{% if messages %}
+<div class="toast-container end-0 m-1 me-4">
+  {% for message in messages %}
+  <div
+    class="toast {% if message.tags == 'success' %}bg-success{% elif message.tags == 'error' %}bg-danger{% else %}bg-warning{% endif %}"
+    role="alert" aria-live="assertive" aria-atomic="true" data-autohide="true" data-bs-delay="2000">
+    <div class="toast-body text-center text-white fw-medium">
+      {{ message }}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+<!--/ Transactions Toast -->
+
+<!-- Transactions Table -->
+<!-- permission required: view_transaction -->
+{% if perms.transactions.view_transaction %}
+
+
+<div class="card">
+  <div class="card-datatable tabler-responsive">
+    <table class="datatables-transaction table">
+      <thead class="border-top">
+        <tr class="text-nowrap">
+          <th></th>
+          <th>Id</th>
+          <th>Catagory Name</th>
+          <th>Slug</th>
+
+      </thead>
+      <tbody>
+        {% for catagory in Catagories %}
+        <tr>
+          <td></td>
+          <td>{{ catagory.id }}</td>
+          <td class="text-nowrap fw-medium text-heading"> <a href="{% url 'book_detail'%}">
+              {{ catagory.catagory_name|capfirst }}
+            </a></td>
+          <td class="text-nowrap">{{ catagory.slug }}</td>
+
+          <td>
+            <div class="d-flex align-items-right gap-1">
+              <!-- permission required: edit_transaction -->
+              {% if perms.transactions.edit_transaction %}
+              <a href="{% url 'book_update' catagory.id %}"
+                class="btn btn-icon btn-text-secondary waves-effect waves-light rounded-pill"><i
+                  class='icon-base ti tabler-edit icon-md'></i></a>
+              {% endif %}
+              <!-- permission required: delete_transaction -->
+              {% if perms.transactions.delete_transaction %}
+              <a href="{% url 'book_delete' catagory.id %}"
+                class="btn btn-icon btn-text-secondary waves-effect waves-light rounded-pill delete-transaction"
+                data-transaction-username="{{ catagory.name|capfirst }}"><i
+                  class="icon-base ti tabler-trash icon-md"></i></a>
+              {% endif %}
+
+              <a href="" class="btn btn-icon btn-text-secondary waves-effect waves-light rounded-pill"
+                data-transaction-username="{{ catagory.name|capfirst }}"><i
+                  class="icon-base ti tabler-eye icon-md"></i></a>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- Offcanvas to add new customer -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEcommerceCategoryList"
+    aria-labelledby="offcanvasEcommerceCategoryListLabel">
+    <!-- Offcanvas Header -->
+    <div class="offcanvas-header py-6">
+      <h5 id="offcanvasEcommerceCategoryListLabel" class="offcanvas-title">Add Category</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <!-- Offcanvas Body -->
+    <div class="offcanvas-body border-top">
+      <form class="pt-0" id="eCommerceCategoryListForm" onsubmit="return true">
+        <!-- Title -->
+        <div class="mb-6 form-control-validation">
+          <label class="form-label" for="ecommerce-category-title">Title</label>
+          <input type="text" class="form-control" id="ecommerce-category-title" placeholder="Enter category title"
+            name="categoryTitle" aria-label="category title" />
+        </div>
+        <!-- Slug -->
+        <div class="mb-6 form-control-validation">
+          <label class="form-label" for="ecommerce-category-slug">Slug</label>
+          <input type="text" id="ecommerce-category-slug" class="form-control" placeholder="Enter slug"
+            aria-label="slug" name="slug" />
+        </div>
+        <!-- Image -->
+        <div class="mb-6">
+          <label class="form-label" for="ecommerce-category-image">Attachment</label>
+          <input class="form-control" type="file" id="ecommerce-category-image" />
+        </div>
+        <!-- Parent category -->
+        <div class="mb-6 ecommerce-select2-dropdown">
+          <label class="form-label" for="ecommerce-category-parent-category">Parent category</label>
+          <select id="ecommerce-category-parent-category" class="select2 form-select"
+            data-placeholder="Select parent category">
+            <option value="">Select parent Category</option>
+            <option value="Household">Household</option>
+            <option value="Management">Management</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Office">Office</option>
+            <option value="Automotive">Automotive</option>
+          </select>
+        </div>
+        <!-- Description -->
+        <div class="mb-6">
+          <label class="form-label">Description</label>
+          <div class="form-control p-0 py-1">
+            <div class="comment-editor border-0" id="ecommerce-category-description"></div>
+            <div class="comment-toolbar border-0 rounded">
+              <div class="d-flex justify-content-end">
+                <span class="ql-formats me-0">
+                  <button class="ql-bold"></button>
+                  <button class="ql-italic"></button>
+                  <button class="ql-underline"></button>
+                  <button class="ql-list" value="ordered"></button>
+                  <button class="ql-list" value="bullet"></button>
+                  <button class="ql-link"></button>
+                  <button class="ql-image"></button>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Status -->
+        <div class="mb-6 ecommerce-select2-dropdown">
+          <label class="form-label">Select category status</label>
+          <select id="ecommerce-category-status" class="select2 form-select" data-placeholder="Select category status">
+            <option value="">Select category status</option>
+            <option value="Scheduled">Scheduled</option>
+            <option value="Publish">Publish</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+        </div>
+        <!-- Submit and reset -->
+        <div class="mb-6">
+          <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">Add</button>
+          <button type="reset" class="btn btn-label-danger" data-bs-dismiss="offcanvas">Discard</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+</div>
+{% endif %}
+
+<!--/ Transactions Table -->
+<script>
+  var addTransactionBtn = '{% if perms.transactions.add_transaction %}' + true + '{% endif %}';
+
+</script>
+
+
+{% endblock %}

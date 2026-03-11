@@ -1,0 +1,595 @@
+{% extends layout_path %}
+
+{% load static %}
+{% load i18n %}
+
+{% block title %}Transactions{% endblock title %}
+
+{% block vendor_css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'vendor/libs/select2/select2.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/@form-validation/form-validation.css' %}" />
+<link rel="stylesheet" href="{% static 'vendor/libs/flatpickr/flatpickr.css' %}" />
+{% endblock vendor_css %}
+
+{% block vendor_js %}
+{{ block.super }}
+<script src="{% static 'vendor/libs/select2/select2.js' %}"></script>
+<script src="{% static 'vendor/libs/@form-validation/popular.js' %}"></script>
+<script src="{% static 'vendor/libs/@form-validation/bootstrap5.js' %}"></script>
+<script src="{% static 'vendor/libs/@form-validation/auto-focus.js' %}"></script>
+<script src="{% static 'vendor/libs/flatpickr/flatpickr.js' %}"></script>
+{% endblock vendor_js %}
+
+{% block page_js %}
+{{ block.super }}
+<script src="{% static 'js/transactions-add-update.js' %}"></script>
+{% endblock page_js %}
+
+{% block content %}
+
+<div class="card">
+  <div class="card-body">
+    <form class="add-transactions pt-0" id="addTransactionForm" action="{% url 'book_add' %}" method="post">
+      {% csrf_token %}
+
+      <h6>1. Account Details</h6>
+      <div class="row mb-6">
+        <label class="col-sm-3 col-form-label">Book Title</label>
+        <div class="col-sm-9">
+          <input type="text" name="B_title" class="form-control" placeholder="Book Title" />
+        </div>
+      </div>
+
+      <hr class="my-6 mx-n6" />
+
+      <h6>1. Account Details</h6>
+      <div class="row mb-6">
+        <label class="col-sm-3 col-form-label">Language</label>
+        <div class="col-sm-9">
+          <input type="text" name="language" class="form-control" placeholder="Book Language" />
+        </div>
+      </div>
+
+      <div class="row mb-6">
+        <label class="col-sm-3 col-form-label">Total Volumes</label>
+        <div class="col-sm-9">
+          <input type="number" name="total_volumes" class="form-control" placeholder="Total Volumes" />
+        </div>
+      </div>
+
+      <div class="row mb-6">
+        <label class="col-sm-3 col-form-label" for="multicol-author">Author</label>
+        <div class="col-sm-9">
+          {% comment %} <select id="multicol-author" name="author" class="select2 form-select" data-allow-clear="true">
+            <option value="">Select</option>
+            {% for author in authors %}
+            <option value="{{ author.id }}">{{ author.author_name }}</option>
+            {% endfor %}
+
+          </select>
+
+          <!-- Add Button -->
+          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#authorModal">
+            +
+          </button> {% endcomment %}
+
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="mb-6 col ecommerce-select2-dropdown">
+              <label class="form-label mb-1" for="category-org">
+                <span> &nbsp;</span>
+              </label>
+              <select id="multicol-author" name="author" class="select2 form-select" data-placeholder="Select Category">
+                <option value="">Select Author</option>
+                {% for author in authors %}
+                <option value="{{ author.id }}">{{ author.author_name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <a href="javascript:void(0);" class="fw-medium btn btn-icon btn-label-primary ms-4"><i
+                class="icon-base ti tabler-plus icon-md" data-bs-toggle="modal" data-bs-target="#authorModal"></i></a>
+          </div>
+
+
+
+
+
+
+        </div>
+      </div>
+
+
+
+
+      <div class="row mb-6">
+        <label class="col-sm-3 col-form-label" for="multicol-library">Library</label>
+        <div class="col-sm-9">
+          <select id="multicol-library" name="library" class="select2 form-select" data-allow-clear="true">
+            <option value="">Select</option>
+            {% for library in libraries %}
+            <option value="{{ library.id }}">{{ library.Library_name }}</option>
+            {% endfor %}
+
+          </select>
+        </div>
+      </div>
+
+      <hr class="my-6 mx-n6" />
+
+
+
+
+      {% comment %}
+      <h6>2. Personal Info</h6>
+
+      <div class="row mb-6">
+        <label class="col-sm-3 col-form-label" for="multicol-author">Author</label>
+        <div class="col-sm-9">
+          <select id="multicol-author" name="author" class="select2 form-select" data-allow-clear="true">
+            <option value="">Select</option>
+            {% for author in authors %}
+            <option value="{{ author.id }}">{{ author.author_name }}</option>
+            {% endfor %}
+
+          </select>
+        </div>
+      </div>
+
+      <div class="row mb-6">
+        <label class="col-sm-3 col-form-label"" for=" multicol-library">Library</label>
+        <div class="col-sm-9">
+          <select id="multicol-library" name="library" class="select2 form-select" data-allow-clear="true">
+            <option value="">Select</option>
+            {% for library in libraries %}
+            <option value="{{ library.id }}">{{ library.Library_name }}</option>
+            {% endfor %}
+
+          </select>
+        </div>
+      </div>
+
+      <div class="row mb-6">
+        <label class="col-sm-3 col-form-label" for="multicol-publisher">Publisher</label>
+        <div class="col-sm-9">
+          <select id="multicol-publisher" name="publisher" class="select2 form-select" data-allow-clear="true">
+            <option value="">Select</option>
+            {% for publisher in publishers %}
+            <option value="{{ publisher.id }}">{{ publisher.Publisher_name }}</option>
+            {% endfor %}
+
+          </select>
+        </div>
+      </div>
+
+
+      <div class="row mb-6">
+        <label class="col-sm-3 col-form-label" for="multicol-category">Categories</label>
+        <div class="col-sm-9">
+          <select id="multicol-category" name="category" class="select2 form-select" data-allow-clear="true">
+            <option value="">Select</option>
+            {% for category in categories %}
+            <option value="{{ category.id }}">{{ category.catagory_name }}</option>
+            {% endfor %}
+
+          </select>
+        </div>
+      </div> {% endcomment %}
+
+
+
+
+
+
+
+
+
+
+      <button type="submit" class="btn btn-primary me-sm-3 me-1" name="submitButton">Submit</button>
+      <a href="{% url 'book_list' %}" class="btn btn-secondary">Back</a>
+    </form>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="authorModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5>Add New Author</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <input type="text" id="newAuthorName" class="form-control" placeholder="Author Name">
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="addAuthor()">
+          Save Author
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+{% comment %}
+
+
+
+<!-- Multi Column with Form Separator -->
+<div class="row mb-6 gy-6">
+  <!-- Form Separator -->
+  <div class="col-xxl">
+    <div class="card">
+      <h5 class="card-header">Form Separator</h5>
+      <form class="card-body">
+        <h6>1. Account Details</h6>
+        <div class="row mb-6">
+          <label class="col-sm-3 col-form-label">Book Title</label>
+          <div class="col-sm-9">
+            <input type="text" name="B_title" class="form-control" placeholder="Book Title" />
+          </div>
+        </div>
+
+        <hr class="my-6 mx-n6" />
+
+
+
+
+        <h6>2. Personal Info</h6>
+
+        <div class="row mb-6">
+          <label class="col-sm-3 col-form-label" name="author" for="multicol-author">Author</label>
+          <div class="col-sm-9">
+            <select id="multicol-author" class="select2 form-select" data-allow-clear="true">
+              <option value="">Select</option>
+              {% for author in authors %}
+              <option value="{{ author.id }}">{{ author.author_name }}</option>
+              {% endfor %}
+
+            </select>
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-sm-3 col-form-label" name="library" for="multicol-library">Library</label>
+          <div class="col-sm-9">
+            <select id="multicol-library" class="select2 form-select" data-allow-clear="true">
+              <option value="">Select</option>
+              {% for library in libraries %}
+              <option value="{{ library.id }}">{{ library.Library_name }}</option>
+              {% endfor %}
+
+            </select>
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-sm-3 col-form-label" name="publisher" for="multicol-publisher">Publisher</label>
+          <div class="col-sm-9">
+            <select id="multicol-publisher" class="select2 form-select" data-allow-clear="true">
+              <option value="">Select</option>
+              {% for publisher in publishers %}
+              <option value="{{ publisher.id }}">{{ publisher.Publisher_name }}</option>
+              {% endfor %}
+
+            </select>
+          </div>
+        </div>
+
+
+        <div class="row mb-6">
+          <label class="col-sm-3 col-form-label" name="category" for="multicol-category">Categories</label>
+          <div class="col-sm-9">
+            <select id="multicol-category" class="select2 form-select" data-allow-clear="true">
+              <option value="">Select</option>
+              {% for category in categories %}
+              <option value="{{ category.id }}">{{ category.catagory_name }}</option>
+              {% endfor %}
+
+            </select>
+          </div>
+        </div>
+
+        <div class="row mb-6">
+          <label class="col-sm-3 col-form-label" name="user" for="multicol-user">User</label>
+          <div class="col-sm-9">
+            <select id="multicol-user" class="select2 form-select" data-allow-clear="true">
+              <option value="">Select</option>
+              {% for user in users %}
+              <option value="{{ user.id }}">{{ user }} </option>
+              {% endfor %}
+
+            </select>
+          </div>
+        </div>
+
+
+
+
+
+        <div class="pt-6">
+          <div class="row justify-content-end">
+            <div class="col-sm-9">
+              <button type="submit" class="btn btn-primary me-4">Submit</button>
+              <a href="{% url 'book_list' %}" class="btn btn-secondary">Back</a>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  {% endcomment %}
+
+
+
+
+
+
+
+
+  {% comment %}
+
+  <!-- Multi Column with Form Separator -->
+  <div class="row mb-6 gy-6">
+    <!-- Form Separator -->
+    <div class="col-xxl">
+      <div class="card">
+        <h5 class="card-header">Form Separator</h5>
+        <form class="card-body">
+          <h6>1. Account Details</h6>
+          <div class="row mb-6">
+            <label class="col-sm-3 col-form-label">Book Title</label>
+            <div class="col-sm-9">
+              <input type="text" name="B_title" class="form-control" placeholder="Book Title" />
+            </div>
+          </div>
+          <div class="row mb-6">
+            <label class="col-sm-3 col-form-label" for="multicol-email">Email</label>
+            <div class="col-sm-9">
+              <div class="input-group input-group-merge">
+                <input type="text" id="multicol-email" class="form-control" placeholder="john.doe" aria-label="john.doe"
+                  aria-describedby="multicol-email2" />
+                <span class="input-group-text" id="multicol-email2">@example.com</span>
+              </div>
+            </div>
+          </div>
+          <div class="row form-password-toggle">
+            <label class="col-sm-3 col-form-label" for="multicol-password">Password</label>
+            <div class="col-sm-9">
+              <div class="input-group input-group-merge">
+                <input type="password" id="multicol-password" class="form-control"
+                  placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                  aria-describedby="multicol-password2" />
+                <span class="input-group-text cursor-pointer" id="multicol-password2"><i
+                    class="icon-base ti tabler-eye-off"></i></span>
+              </div>
+            </div>
+          </div>
+          <hr class="my-6 mx-n6" />
+
+
+          <h6>1. Account Details</h6>
+          <div class="row mb-6">
+            <label class="col-sm-3 col-form-label" for="multicol-username">Book Title</label>
+            <div class="col-sm-9">
+              <input type="text" id="multicol-username" class="form-control" placeholder="john.doe" />
+            </div>
+          </div>
+          <div class="row mb-6">
+            <label class="col-sm-3 col-form-label" for="multicol-email">Email</label>
+            <div class="col-sm-9">
+              <div class="input-group input-group-merge">
+                <input type="text" id="multicol-email" class="form-control" placeholder="john.doe" aria-label="john.doe"
+                  aria-describedby="multicol-email2" />
+                <span class="input-group-text" id="multicol-email2">@example.com</span>
+              </div>
+            </div>
+          </div>
+          <div class="row form-password-toggle">
+            <label class="col-sm-3 col-form-label" for="multicol-password">Password</label>
+            <div class="col-sm-9">
+              <div class="input-group input-group-merge">
+                <input type="password" id="multicol-password" class="form-control"
+                  placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                  aria-describedby="multicol-password2" />
+                <span class="input-group-text cursor-pointer" id="multicol-password2"><i
+                    class="icon-base ti tabler-eye-off"></i></span>
+              </div>
+            </div>
+          </div>
+          <hr class="my-6 mx-n6" />
+
+
+
+          <h6>2. Personal Info</h6>
+          <div class="row mb-6">
+            <label class="col-sm-3 col-form-label" for="multicol-full-name">Full Name</label>
+            <div class="col-sm-9">
+              <input type="text" id="multicol-full-name" class="form-control" placeholder="John Doe" />
+            </div>
+          </div>
+
+          <div class="row mb-6">
+            <label class="col-sm-3 col-form-label" for="multicol-author">Author</label>
+            <div class="col-sm-9">
+              <select id="multicol-author" class="select2 form-select" data-allow-clear="true">
+                <option value="">Select</option>
+                {% for author in authors %}
+                <option value="{{ author.id }}">{{ author.author_name }}</option>
+                {% endfor %}
+
+              </select>
+            </div>
+          </div>
+
+
+
+
+          <div class="row mb-6">
+            <label class="col-sm-3 col-form-label" for="multicol-country">Country</label>
+            <div class="col-sm-9">
+              <select id="multicol-country" class="select2 form-select" data-allow-clear="true">
+                <option value="">Select</option>
+                <option value="Australia">Australia</option>
+                <option value="Bangladesh">Bangladesh</option>
+                <option value="Belarus">Belarus</option>
+                <option value="Brazil">Brazil</option>
+                <option value="Canada">Canada</option>
+                <option value="China">China</option>
+                <option value="France">France</option>
+                <option value="Germany">Germany</option>
+                <option value="India">India</option>
+                <option value="Indonesia">Indonesia</option>
+                <option value="Israel">Israel</option>
+                <option value="Italy">Italy</option>
+                <option value="Japan">Japan</option>
+                <option value="Korea">Korea, Republic of</option>
+                <option value="Mexico">Mexico</option>
+                <option value="Philippines">Philippines</option>
+                <option value="Russia">Russian Federation</option>
+                <option value="South Africa">South Africa</option>
+                <option value="Thailand">Thailand</option>
+                <option value="Turkey">Turkey</option>
+                <option value="Ukraine">Ukraine</option>
+                <option value="United Arab Emirates">United Arab Emirates</option>
+                <option value="United Kingdom">United Kingdom</option>
+                <option value="United States">United States</option>
+              </select>
+            </div>
+          </div>
+          <div class="row mb-6 select2-primary">
+            <label class="col-sm-3 col-form-label" for="multicol-language">Language</label>
+            <div class="col-sm-9">
+              <select id="multicol-language" class="select2 form-select" multiple>
+                <option value="en" selected>English</option>
+                <option value="fr" selected>French</option>
+                <option value="de">German</option>
+                <option value="pt">Portuguese</option>
+              </select>
+            </div>
+          </div>
+          <div class="row mb-6">
+            <label class="col-sm-3 col-form-label" for="multicol-birthdate">Birth Date</label>
+            <div class="col-sm-9">
+              <input type="text" id="multicol-birthdate" class="form-control dob-picker" placeholder="YYYY-MM-DD" />
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-sm-3 col-form-label" for="multicol-phone">Phone No</label>
+            <div class="col-sm-9">
+              <input type="text" id="multicol-phone" class="form-control phone-mask" placeholder="658 799 8941"
+                aria-label="658 799 8941" />
+            </div>
+          </div>
+          <div class="pt-6">
+            <div class="row justify-content-end">
+              <div class="col-sm-9">
+                <button type="submit" class="btn btn-primary me-4">Submit</button>
+                <a href="{% url 'book_list' %}" class="btn btn-secondary">Back</a>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    {% endcomment %}
+
+
+
+
+
+
+    {% comment %}
+
+    <!-- Add Transactions Form -->
+    <div class="card">
+      <div class="card-body">
+        <form class="add-transactions pt-0" id="addTransactionForm" action="{% url 'book_add' %}" method="post">
+          {% csrf_token %}
+          <div class="mb-4 form-control-validation">
+            <label class="form-label" for="customer-name">Book</label>
+            <input type="text" class="form-control" id="customer-name" name="customer" placeholder="Full Name" />
+          </div>
+          <div class="mb-4 form-control-validation">
+            <label class="form-label" for="transaction-date">Transaction date</label>
+            <input type="text" id="transaction-date" class="form-control" name="transaction_date"
+              value="{{ current_date }}" placeholder="Transaction Date" />
+          </div>
+          <div class="mb-4 form-control-validation">
+            <label class="form-label" for="due-date">Due date</label>
+            <input type="text" id="due-date" class="form-control" name="due_date" placeholder="Due Date" />
+          </div>
+          <div class="mb-4 form-control-validation">
+            <label class="form-label" for="total-amount">Total Amount</label>
+            <input type="number" id="total-amount" name="total" class="form-control" placeholder="Total Amount" />
+          </div>
+          <div class="mb-4 form-control-validation">
+            <label class="form-label" for="customer-status">Status</label>
+            <select id="customer-status" class="select2 form-select" name="status">
+              <option value="" disabled selected class="d-none"></option>
+              <option value="Paid">Paid</option>
+              <option value="Due">Due</option>
+              <option value="Canceled">Canceled</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary me-sm-3 me-1" name="submitButton">Submit</button>
+          <a href="{% url 'book_list' %}" class="btn btn-secondary">Back</a>
+        </form>
+      </div>
+    </div>
+    <!--/ Add Transactions Form --> {% endcomment %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+      function addAuthor() {
+        let name = document.getElementById("newAuthorName").value;
+
+        fetch("{% url 'ajax_add_author' %}", {
+            method: "POST",
+            headers: {
+              "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: new URLSearchParams({
+              "name": name
+            })
+          })
+          .then(response => response.json())
+          .then(data => {
+
+            // Add new option to dropdown
+            let select = document.querySelector("select[name='author']");
+            let option = document.createElement("option");
+
+            option.value = data.id;
+            option.text = data.name;
+            option.selected = true;
+
+            select.appendChild(option);
+
+            // Close modal
+            bootstrap.Modal.getInstance(
+              document.getElementById("authorModal")
+            ).hide();
+          });
+      }
+
+    </script>
+
+
+    {% endblock %}
