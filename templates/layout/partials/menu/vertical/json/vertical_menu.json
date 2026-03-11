@@ -1,0 +1,155 @@
+{
+  "menu": [
+
+
+  {
+      "url": "index",
+      "name": "Markaz Dashboard",
+      "icon": "menu-icon icon-base ti tabler-smart-home",
+      "slug": "dashboard/dashboard-analytics"
+  },
+  {
+      "url": "book_list",
+      "name": "Printed Books",
+       "icon": "menu-icon icon-base ti tabler-book-2",
+      "slug": "book_list",
+      "submenu":[
+          {
+              "url": "book_list",
+              "name": "Book List",
+              "slug": "book_list"
+          },
+          {
+              "url": "book_catagory",
+              "name": "Book Catagory",
+              "slug": "book_catagory"
+          },
+          {
+              "url": "book_author",
+              "name": "Book Author",
+              "slug": "book_author"
+          },
+          {
+              "url": "book_library",
+              "name": "Book Library",
+              "slug": "book_library"
+          }
+      ]
+
+  },
+
+    {
+      "name": "Digital Copy",
+      "icon": "menu-icon icon-base ti tabler-book-2",
+      "slug": "app-ecommerce",
+      "submenu": [
+
+	  {
+              "url": "app-ecommerce-product-list",
+              "name": "PDF List",
+              "slug": "app-ecommerce-product-list"
+            },
+            {
+              "url": "app-ecommerce-product-add",
+              "name": "Add PDF",
+              "slug": "app-ecommerce-product-add"
+            },
+            {
+              "url": "app-ecommerce-product-category-list",
+              "name": "Category List",
+              "slug": "app-ecommerce-product-category-list"
+            },
+             {
+              "url": "app-ecommerce-product-category-list",
+              "name": "Author List",
+              "slug": "app-ecommerce-product-category-list"
+            }
+
+
+      ]
+    },
+
+        {
+      "menu_header": "System Info"
+    },
+
+
+    {
+      "name": "Users",
+      "icon": "menu-icon icon-base ti tabler-users",
+      "permission": "user.view_user",
+      "slug": "app-user",
+      "submenu": [
+        {
+          "url": "app-user-list",
+          "name": "List",
+          "slug": "app-user-list"
+        },
+        {
+          "name": "View",
+          "slug": "app-user-view",
+          "submenu": [
+            {
+              "url": "app-user-view-account",
+              "name": "Account",
+              "slug": "app-user-view-account"
+            },
+            {
+              "url": "app-user-view-security",
+              "name": "Security",
+              "slug": "app-user-view-security"
+            },
+            {
+              "url": "app-user-view-billing",
+              "name": "Billing & Plans",
+              "slug": "app-user-view-billing"
+            },
+            {
+              "url": "app-user-view-notifications",
+              "name": "Notifications",
+              "slug": "app-user-view-notifications"
+            },
+            {
+              "url": "app-user-view-connections",
+              "name": "Connections",
+              "slug": "app-user-view-connections"
+            }
+          ]
+        }
+      ]
+    },
+
+
+
+
+
+     {
+      "name": "Roles & Permissions",
+      "icon": "menu-icon icon-base ti tabler-settings",
+      "permission": "permission.view_permission",
+      "slug": "app-access",
+      "submenu": [
+        {
+          "url": "app-access-roles",
+          "name": "Roles",
+          "slug": "app-access-roles"
+        },
+        {
+          "url": "app-access-permission",
+          "name": "Permission",
+          "slug": "app-access-permission"
+        }
+      ]
+    },
+
+
+    {
+      "url": "https://pixinvent.ticksy.com/",
+      "external": true,
+      "icon": "menu-icon icon-base ti tabler-lifebuoy",
+      "name": "Support",
+      "slug": "support",
+      "target": "_blank"
+    }
+  ]
+}
