@@ -1,0 +1,34 @@
+{
+      "url": "book_list",
+      "name": "Printed Books",
+       "icon": "menu-icon icon-base ti tabler-book-2",
+      "slug": "book_list",
+      "submenu":[
+          {
+              "url": "book_list",
+              "name": "Book List",
+              "slug": "book_list"
+          },
+          {
+              "url": "book_catagory",
+              "name": "Book Catagory",
+              "slug": "book_catagory"
+          },
+          {
+              "url": "book_author",
+              "name": "Book Author",
+              "slug": "book_author"
+          },
+          {
+              "url": "book_library",
+              "name": "Book Library",
+              "slug": "book_library"
+          },
+          {
+              "url": "book_publisher",
+              "name": "Book Publisher",
+              "slug": "book_publisher"
+          }
+      ]
+
+  },

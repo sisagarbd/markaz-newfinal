@@ -253,7 +253,7 @@ $(function () {
 
 
                 {
-                  text: `<i class="icon-base ti tabler-plus icon-16px me-0 me-sm-2"></i><span class="d-none d-sm-inline-block">Add New Category</span>`,
+                  text: `<i class="icon-base ti tabler-plus icon-16px me-0 me-sm-2"></i><span class="d-none d-sm-inline-block">Add New Publisher</span>`,
                   // className: 'add-new btn btn-primary',
                   // attr: {
                   //   'data-bs-toggle': 'offcanvas',
@@ -261,7 +261,7 @@ $(function () {
                   // }
                   className: 'add-new btn btn-primary' + (addTransactionBtn ? '' : ' disabled'),
                   action: function (e, dt, button, config) {
-                    window.location.href = '/book/book_catagory/add';
+                    window.location.href = '/book/publisher/add';
                   }
 
                 }

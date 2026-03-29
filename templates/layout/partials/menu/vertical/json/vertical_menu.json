@@ -9,8 +9,11 @@
       "slug": "dashboard/dashboard-analytics"
   },
   {
+      "menu_header": "Printed Books"
+  },
+  {
       "url": "book_list",
-      "name": "Printed Books",
+      "name": "All Books",
        "icon": "menu-icon icon-base ti tabler-book-2",
       "slug": "book_list",
       "submenu":[
@@ -20,27 +23,107 @@
               "slug": "book_list"
           },
           {
-              "url": "book_catagory",
-              "name": "Book Catagory",
-              "slug": "book_catagory"
+              "url": "book_add",
+              "name": "Book Add",
+              "slug": "book_add"
           },
           {
-              "url": "book_author",
-              "name": "Book Author",
-              "slug": "book_author"
-          },
-          {
-              "url": "book_library",
-              "name": "Book Library",
-              "slug": "book_library"
+              "url": "book_list",
+              "name": "Borrow List",
+              "slug": "book_list"
           }
       ]
 
   },
 
+  {
+      "url": "book_catagory",
+      "name": "Books Catagory",
+       "icon": "menu-icon icon-base ti tabler-tag",
+      "slug": "book_catagory",
+      "submenu":[
+          {
+              "url": "book_catagory",
+              "name": "Catagory List",
+              "slug": "book_catagory"
+
+          },
+          {
+              "url": "book_catagory_add",
+              "name": "Catagory Add",
+              "slug": "book_add"
+          }
+      ]
+
+  },
+   {
+      "url": "book_author",
+      "name": "Books Author",
+       "icon": "menu-icon icon-base ti tabler-pencil-minus",
+      "slug": "book_author",
+      "submenu":[
+          {
+              "url": "book_author",
+              "name": "Author List",
+              "slug": "book_author"
+
+          },
+          {
+              "url": "book_author_add",
+              "name": "Author Add",
+              "slug": "book_author_add"
+          }
+      ]
+
+  },
+   {
+      "url": "book_library",
+      "name": "Books Library",
+       "icon": "menu-icon icon-base ti tabler-building-estate",
+      "slug": "book_library",
+      "submenu":[
+          {
+              "url": "book_library",
+              "name": "Library List",
+              "slug": "book_library"
+
+          },
+          {
+              "url": "book_library_add",
+              "name": "Library Add",
+              "slug": "book_library_add"
+          }
+      ]
+
+  },
+  {
+      "url": "book_publisher",
+      "name": "Books Publisher",
+       "icon": "menu-icon icon-base ti tabler-file-text",
+      "slug": "book_publisher",
+      "submenu":[
+          {
+              "url": "book_publisher",
+              "name": "Publisher List",
+              "slug": "book_publisher"
+
+          },
+          {
+              "url": "book_publisher_add",
+              "name": "Publisher Add",
+              "slug": "book_publisher_add"
+          }
+      ]
+
+  },
+
+  {
+      "menu_header": "Printed Books"
+  },
+
     {
       "name": "Digital Copy",
-      "icon": "menu-icon icon-base ti tabler-book-2",
+      "icon": "menu-icon icon-base ti tabler-file-text",
       "slug": "app-ecommerce",
       "submenu": [
 
@@ -69,7 +152,7 @@
       ]
     },
 
-        {
+    {
       "menu_header": "System Info"
     },
 
