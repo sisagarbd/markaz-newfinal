@@ -33,44 +33,57 @@
 {% endblock page_js %}
 
 {% block content %}
-<div class="app-ecommerce">
-  <!-- Add Product -->
-  <div>
-    <!-- Offcanvas Header -->
-    <div class="offcanvas-header py-6">
-      <h5 id="offcanvasEcommerceCategoryListLabel" class="offcanvas-title"> Add Category</h5>
-      <button type=" button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+<div class="col-12">
+  <div class="card p-12">
+
+    <div class="row gy-6">
+      <div class="app-ecommerce">
+        <!-- Add Product -->
+        <div>
+          <!-- Offcanvas Header -->
+          <div class="offcanvas-header">
+            <h5 id="offcanvasEcommerceCategoryListLabel" class="offcanvas-title"> Add Category</h5>
+            <button type=" button" class="btn-close text-reset pt-1" data-bs-dismiss="offcanvas"
+              aria-label="Close"></button>
+          </div>
+          <!-- Offcanvas Body -->
+          <div class="offcanvas-body border-top">
+            <form class="pt-6" id="eCommerceCategoryListForm" method="POST" onsubmit="return true">
+              <!-- Title -->
+              {% csrf_token %}
+              <div class="mb-6 form-control-validation">
+                <label class="form-label" for="ecommerce-category-title">Authon Name</label>
+                <input type="text" class="form-control" id="ecommerce-category-title" placeholder="Enter category title"
+                  name="authorName" aria-label="category title" />
+              </div>
+              <!-- Birth Date -->
+              <div class="col mb-6 form-control-validation"><label class="form-label" for="ecommerce-product-sku">Date
+                  of
+                  Birth</label>
+                <input type="date" class="form-control" id="ecommerce-product-sku" placeholder="Date of Inclusion"
+                  name="date_of_birth" aria-label="Product SKU" />
+              </div>
+
+              <div class="col mb-6 form-control-validation"><label class="form-label" for="ecommerce-product-sku">Date
+                  of
+                  Death</label>
+                <input type="date" class="form-control" id="ecommerce-product-sku" placeholder="Date of Inclusion"
+                  name="date_of_death" aria-label="Product SKU" />
+              </div>
+
+
+              <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">Add Author</button>
+
+            </form>
+          </div>
+        </div>
+
+      </div>
     </div>
-    <!-- Offcanvas Body -->
-    <div class="offcanvas-body border-top">
-      <form class="pt-0" id="eCommerceCategoryListForm" method="POST" onsubmit="return true">
-        <!-- Title -->
-        {% csrf_token %}
-        <div class="mb-6 form-control-validation">
-          <label class="form-label" for="ecommerce-category-title">Authon Name</label>
-          <input type="text" class="form-control" id="ecommerce-category-title" placeholder="Enter category title"
-            name="authorName" aria-label="category title" />
-        </div>
-        <!-- Birth Date -->
-        <div class="col mb-6 form-control-validation"><label class="form-label" for="ecommerce-product-sku">Date of
-            Birth</label>
-          <input type="date" class="form-control" id="ecommerce-product-sku" placeholder="Date of Inclusion"
-            name="date_of_birth" aria-label="Product SKU" />
-        </div>
 
-        <div class="col mb-6 form-control-validation"><label class="form-label" for="ecommerce-product-sku">Date of
-            Death</label>
-          <input type="date" class="form-control" id="ecommerce-product-sku" placeholder="Date of Inclusion"
-            name="date_of_death" aria-label="Product SKU" />
-        </div>
-
-
-        <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">Add Author</button>
-
-      </form>
-    </div>
   </div>
 
 </div>
+
 
 {% endblock %}

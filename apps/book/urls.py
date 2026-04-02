@@ -28,10 +28,10 @@ urlpatterns = [
         login_required(BookDeleteView.as_view()), name="book_delete",
     ),
 
-    path(
-        "ajax/add_author/",
-        BookAddView.ajax_add_author, name="ajax_add_author",
-    ),
+    # path(
+    #     "ajax/add_author/",
+    #     BookAddView.ajax_add_author, name="ajax_add_author",
+    # ),
     path(
         "book_detail/",
         login_required(BookListView.as_view(template_name="book_details.html")), name="book_detail",

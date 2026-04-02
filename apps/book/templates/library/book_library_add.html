@@ -33,45 +33,55 @@
 {% endblock page_js %}
 
 {% block content %}
-<div class="app-ecommerce">
-  <!-- Add Product -->
-  <div>
-    <!-- Offcanvas Header -->
-    <div class="offcanvas-header py-6">
-      <h5 id="offcanvasEcommerceCategoryListLabel" class="offcanvas-title"> Add Library</h5>
-      <button type=" button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <!-- Offcanvas Body -->
-    <div class="offcanvas-body border-top">
-      <form class="pt-0" id="eCommerceCategoryListForm" method="POST" onsubmit="return true">
-        <!-- Title -->
-        {% csrf_token %}
-        <div class="mt-6 mb-6 form-control-validation">
-          <label class="form-label" for="ecommerce-category-title">Library Name</label>
-          <input type="text" class="form-control" id="ecommerce-category-title" placeholder="Enter library name"
-            name="LibraryName" aria-label="library name" />
+
+<div class="col-12">
+  <div class="card p-12">
+
+    <div class="row gy-6">
+      <div class="app-ecommerce">
+        <!-- Add Product -->
+        <div>
+          <!-- Offcanvas Header -->
+          <div class="offcanvas-header py-6">
+            <h5 id="offcanvasEcommerceCategoryListLabel" class="offcanvas-title"> Add Library</h5>
+            <button type=" button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <!-- Offcanvas Body -->
+          <div class="offcanvas-body border-top">
+            <form class="pt-0" id="eCommerceCategoryListForm" method="POST" onsubmit="return true">
+              <!-- Title -->
+              {% csrf_token %}
+              <div class="mt-6 mb-6 form-control-validation">
+                <label class="form-label" for="ecommerce-category-title">Library Name</label>
+                <input type="text" class="form-control" id="ecommerce-category-title" placeholder="Enter library name"
+                  name="LibraryName" aria-label="library name" />
+              </div>
+              <!-- Location -->
+              <div class="col mb-6 form-control-validation"><label class="form-label"
+                  for="ecommerce-product-sku">Location</label>
+                <input type="text" class="form-control" id="ecommerce-product-sku" placeholder="Enter location"
+                  name="Location" aria-label="Product SKU" />
+              </div>
+              <!-- City -->
+              <div class="col mb-6 form-control-validation"><label class="form-label"
+                  for="ecommerce-product-sku">City</label>
+                <input type="text" class="form-control" id="ecommerce-product-sku" placeholder="Enter city" name="City"
+                  aria-label="Product SKU" />
+              </div>
+
+
+
+
+              <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">Add Library</button>
+
+            </form>
+          </div>
         </div>
-        <!-- Location -->
-        <div class="col mb-6 form-control-validation"><label class="form-label"
-            for="ecommerce-product-sku">Location</label>
-          <input type="text" class="form-control" id="ecommerce-product-sku" placeholder="Enter location"
-            name="Location" aria-label="Product SKU" />
-        </div>
-        <!-- City -->
-        <div class="col mb-6 form-control-validation"><label class="form-label" for="ecommerce-product-sku">City</label>
-          <input type="text" class="form-control" id="ecommerce-product-sku" placeholder="Enter city" name="City"
-            aria-label="Product SKU" />
-        </div>
 
+      </div>
 
-
-
-        <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">Add Library</button>
-
-      </form>
     </div>
   </div>
-
 </div>
 
 {% endblock %}

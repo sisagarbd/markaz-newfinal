@@ -33,38 +33,53 @@
 {% endblock page_js %}
 
 {% block content %}
-<div class="app-ecommerce">
-  <!-- Add Product -->
-  <div>
-    <!-- Offcanvas Header -->
-    <div class="offcanvas-header py-6">
-      <h5 id="offcanvasEcommerceCategoryListLabel" class="offcanvas-title"> Add Category</h5>
-      <button type=" button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <!-- Offcanvas Body -->
-    <div class="offcanvas-body border-top">
-      <form class="pt-0" id="eCommerceCategoryListForm" method="POST" onsubmit="return true">
-        <!-- Title -->
-        {% csrf_token %}
-        <div class="mb-6 form-control-validation">
-          <label class="form-label" for="ecommerce-category-title">Title</label>
-          <input type="text" class="form-control" id="ecommerce-category-title" placeholder="Enter category title"
-            name="categoryTitle" aria-label="category title" />
+
+
+
+<!-- Basic  -->
+<div class="col-12">
+  <div class="card p-12">
+
+    <div class="row gy-6">
+      <div class="app-ecommerce">
+        <!-- Add Product -->
+        <div>
+          <!-- Offcanvas Header -->
+          <div class="offcanvas-header py-6">
+            <h5 id="offcanvasEcommerceCategoryListLabel" class="offcanvas-title"> Add Category</h5>
+            <button type=" button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <!-- Offcanvas Body -->
+          <div class="offcanvas-body border-top">
+            <form class="pt-0" id="eCommerceCategoryListForm" method="POST" onsubmit="return true">
+              <!-- Title -->
+              {% csrf_token %}
+              <div class="mb-6 form-control-validation">
+                <label class="form-label" for="ecommerce-category-title">Title</label>
+                <input type="text" class="form-control" id="ecommerce-category-title" placeholder="Enter category title"
+                  name="categoryTitle" aria-label="category title" />
+              </div>
+              <!-- Slug -->
+              <div class="mb-6 form-control-validation">
+                <label class="form-label" for="ecommerce-category-slug">Slug</label>
+                <input type="text" id="ecommerce-category-slug" class="form-control" placeholder="Enter slug"
+                  aria-label="slug" name="catagorySlug" />
+              </div>
+
+
+              <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">Add</button>
+
+            </form>
+          </div>
         </div>
-        <!-- Slug -->
-        <div class="mb-6 form-control-validation">
-          <label class="form-label" for="ecommerce-category-slug">Slug</label>
-          <input type="text" id="ecommerce-category-slug" class="form-control" placeholder="Enter slug"
-            aria-label="slug" name="catagorySlug" />
-        </div>
 
-
-        <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">Add</button>
-
-      </form>
+      </div>
     </div>
   </div>
-
 </div>
+<!-- /Basic  -->
+
+
+
 
 {% endblock %}

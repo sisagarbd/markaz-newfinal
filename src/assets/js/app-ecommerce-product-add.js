@@ -43,8 +43,9 @@
 
   // ? Start your code from here
 
-  // Basic Dropzone
 
+  Dropzone.autoDiscover = false;
+  // Basic Dropzone
   const dropzoneBasic = document.querySelector('#dropzone-basic');
   if (dropzoneBasic) {
     const myDropzone = new Dropzone(dropzoneBasic, {

@@ -33,33 +33,41 @@
 {% endblock page_js %}
 
 {% block content %}
-<div class="app-ecommerce">
-  <!-- Add Product -->
-  <div>
-    <!-- Offcanvas Header -->
-    <div class="offcanvas-header py-6">
-      <h5 id="offcanvasEcommerceCategoryListLabel" class="offcanvas-title"> Add Category</h5>
-      <button type=" button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <!-- Offcanvas Body -->
-    <div class="offcanvas-body border-top">
-      <form class="pt-0" id="eCommerceCategoryListForm" method="POST" onsubmit="return true">
-        <!-- Title -->
-        {% csrf_token %}
-        <div class="mt-6 mb-6 form-control-validation">
-          <label class="form-label" for="ecommerce-category-title">Publisher Name</label>
-          <input type="text" class="form-control" id="ecommerce-category-title" placeholder="Enter publisher name"
-            name="Publisher_name" aria-label="Publisher name" />
+
+<div class="col-12">
+  <div class="card p-12">
+
+    <div class="row gy-6">
+      <div class="app-ecommerce">
+        <!-- Add Product -->
+        <div>
+          <!-- Offcanvas Header -->
+          <div class="offcanvas-header py-6">
+            <h5 id="offcanvasEcommerceCategoryListLabel" class="offcanvas-title"> Add Publisher</h5>
+            <button type=" button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <!-- Offcanvas Body -->
+          <div class="offcanvas-body border-top">
+            <form class="pt-0" id="eCommerceCategoryListForm" method="POST" onsubmit="return true">
+              <!-- Title -->
+              {% csrf_token %}
+              <div class="mt-6 mb-6 form-control-validation">
+                <label class="form-label" for="ecommerce-category-title">Publisher Name</label>
+                <input type="text" class="form-control" id="ecommerce-category-title" placeholder="Enter publisher name"
+                  name="Publisher_name" aria-label="Publisher name" />
+              </div>
+              <!-- Slug -->
+
+
+              <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">Add</button>
+
+            </form>
+          </div>
         </div>
-        <!-- Slug -->
 
-
-        <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">Add</button>
-
-      </form>
+      </div>
     </div>
   </div>
-
 </div>
 
 {% endblock %}
