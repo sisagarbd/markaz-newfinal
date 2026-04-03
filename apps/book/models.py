@@ -76,6 +76,14 @@ class Book(models.Model):
     pages = models.IntegerField(blank=True, null=True)
     edition = models.IntegerField(blank=True, null=True)
 
+    # Librarty Spacific Fields
+    shelf_no = models.IntegerField(blank=True, null=True)
+    added_by = models.CharField(max_length=100, blank=True, null=True)
+    date_of_inclusion = models.DateField(blank=True, null=True)
+    no_of_copy = models.IntegerField(default=1)
+
+
+
     # Toocle Fields
 
     is_active = models.BooleanField(default=True)

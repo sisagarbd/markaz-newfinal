@@ -35,7 +35,7 @@
 {% block content %}
 
 
-<form method="POST" action="{% url 'book_add' %}">
+<form method="POST" action="{% url 'book_add' %} " enctype="multipart/form-data">
   {% csrf_token %}
   <div class="app-ecommerce">
     <!-- Add Product -->
@@ -105,7 +105,7 @@
         </div>
         <!-- /Product Information -->
         <!-- Media -->
-        <div class="card mb-6">
+        <!-- <div class="card mb-6">
           <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0 card-title">Product Image</h5>
             <a href="javascript:void(0);" class="fw-medium">Add media from URL</a>
@@ -122,11 +122,11 @@
               </div>
             </form>
           </div>
-        </div>
+        </div> -->
         <!-- /Media -->
 
         <!-- Media -->
-        <div class="card mb-6">
+        <!-- <div class="card mb-6">
           <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0 card-title">Product Image</h5>
             <a href="javascript:void(0);" class="fw-medium">Add media from URL</a>
@@ -143,49 +143,79 @@
               </div>
             </form>
           </div>
-        </div>
+        </div> -->
         <!-- /Media -->
+
+        <!-- Basic  This is hidden form -->
+        <div class="col-12  d-none">
+          <div class="card">
+            <h5 class="card-header">Basic</h5>
+            <div class="card-body">
+              <form action="/upload" class="dropzone needsclick" id="dropzone-basic">
+                <div class="dz-message needsclick">
+                  Drop files here or click to upload
+                  <span class="note needsclick">(This is just a demo dropzone. Selected files are <span
+                      class="fw-medium">not</span> actually uploaded.)</span>
+                </div>
+                <div class="fallback">
+                  <input name="file" type="file" />
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- /Basic  -->
+
+
+
+        <!-- Basic  -->
+        <div class="col-12">
+          <div class="card">
+            <h5 class="card-header">Basic</h5>
+            <div class="mb-6 p-6">
+              <label class="form-label">Book Image</label>
+              <input type="file" name="book_image" class="form-control">
+            </div>
+          </div>
+        </div>
+        <!-- /Basic  -->
 
 
 
         <!-- Variants -->
-        <div class="card mb-6">
+        <div class="card mb-6 mt-6">
           <div class="card-header">
             <h5 class="card-title mb-8">Variants</h5>
           </div>
 
 
           <div class="card-body">
-            <form class="form-repeater">
-              <div data-repeater-list="group-a">
-                <div data-repeater-item>
-                  <div class="row g-sm-6 mb-6">
+            <div class="form-repeater">
+
+              <div class="row g-sm-6 mb-6">
 
 
 
 
-                    <div class="row mb-6">
-                      <div class="col"><label class="form-label" for="ecommerce-product-sku">Shelf No.</label> <input
-                          type="number" class="form-control" id="ecommerce-product-sku" placeholder="Shelf No."
-                          name="productSku" aria-label="Product SKU" /></div>
-                      <div class="col"><label class="form-label" for="ecommerce-product-barcode">Added By</label> <input
-                          type="text" class="form-control" id="ecommerce-product-barcode" placeholder="Added By"
-                          name="productBarcode" aria-label="Product barcode" /></div>
-                    </div>
-                    <div class="row mb-6">
-                      <div class="col"><label class="form-label" for="ecommerce-product-sku">Date of Inclusion</label>
-                        <input type="date" class="form-control" id="ecommerce-product-sku"
-                          placeholder="Date of Inclusion" name="dateInclusion" aria-label="Product SKU" /></div>
-                      <div class="col"><label class="form-label" for="ecommerce-product-barcode">No of Copy</label>
-                        <input type="number" class="form-control" id="ecommerce-product-barcode"
-                          placeholder="No of Copy" name="noOfCopy" aria-label="Product barcode" /></div>
-                    </div>
-
-                  </div>
-
+                <div class="row mb-6">
+                  <div class="col"><label class="form-label" for="ecommerce-product-sku">Shelf No.</label> <input
+                      type="number" class="form-control" id="ecommerce-product-sku" placeholder="Shelf No."
+                      name="shelfNo" aria-label="Product SKU" /></div>
+                  <div class="col"><label class="form-label" for="ecommerce-product-barcode">Added By</label> <input
+                      type="text" class="form-control" id="ecommerce-product-barcode" placeholder="Added By"
+                      name="addedBy" aria-label="Product barcode" /></div>
                 </div>
+                <div class="row mb-6">
+                  <div class="col"><label class="form-label" for="ecommerce-product-sku">Date of Inclusion</label>
+                    <input type="date" class="form-control" id="ecommerce-product-sku" placeholder="Date of Inclusion"
+                      name="dateInclusion" aria-label="Product SKU" /></div>
+                  <div class="col"><label class="form-label" for="ecommerce-product-barcode">No of Copy</label>
+                    <input type="number" class="form-control" id="ecommerce-product-barcode" placeholder="No of Copy"
+                      name="noOfCopy" aria-label="Product barcode" /></div>
+                </div>
+
               </div>
-            </form>
+            </div>
           </div>
         </div>
         <!-- /Variants -->
@@ -205,13 +235,13 @@
             <div class="mb-6">
               <label class="form-label" for="ecommerce-product-price">No of Volume</label>
               <input type="number" class="form-control" id="ecommerce-product-price" placeholder="Total Volume"
-                name="productPrice" aria-label="Product price" />
+                name="bookVolume" aria-label="Product price" />
             </div>
             <!-- Discounted Price -->
             <div class="mb-6">
               <label class="form-label" for="ecommerce-product-discount-price">No of Pages</label>
               <input type="number" class="form-control" id="ecommerce-product-discount-price" placeholder="No of Pages"
-                name="productDiscountedPrice" aria-label="Product discounted price" />
+                name="bookPages" aria-label="Product discounted price" />
             </div>
 
             <div class="mb-6">
@@ -225,7 +255,7 @@
               <span class="mb-0">Live Status</span>
               <div class="w-25 d-flex justify-content-end">
                 <div class="form-check form-switch me-n3">
-                  <input type="checkbox" class="form-check-input" checked />
+                  <input type="checkbox" name="is_active" class="form-check-input" checked />
                 </div>
               </div>
             </div>

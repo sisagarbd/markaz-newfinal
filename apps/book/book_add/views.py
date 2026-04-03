@@ -1,4 +1,5 @@
 from datetime import date
+from urllib import request
 from django.views.generic import TemplateView
 from web_project import TemplateLayout
 from apps.book.forms import BookForm
@@ -12,8 +13,27 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 
+# class BookAddView(PermissionRequiredMixin, TemplateView):
+#     permission_required = ("transactions.add_transaction")
+
+#     def get_context_data(self, **kwargs):
+#         context = TemplateLayout.init(self, super().get_context_data(**kwargs))
+
+
+#         context.update(
+#             {
+#                 "categories": Catagory.objects.all().order_by('id'),
+#                 "publishers": Publisher.objects.all().order_by('id'),
+#                 "authors": Author.objects.all().order_by('id'),
+#                 "libraries": LibraryBranch.objects.all().order_by('id'),
+#             }
+#         )
+#         return context
+
+
 class BookAddView(PermissionRequiredMixin, TemplateView):
     permission_required = ("transactions.add_transaction")
+    template_name = "book/add_book.html"
 
     def get_context_data(self, **kwargs):
         context = TemplateLayout.init(self, super().get_context_data(**kwargs))
@@ -28,6 +48,82 @@ class BookAddView(PermissionRequiredMixin, TemplateView):
             }
         )
         return context
+
+    def post(self, request, *args, **kwargs):
+
+        # 🔹 Basic Fields
+        title = request.POST.get("productTitle")
+        isbn = request.POST.get("productSku")
+        call_no = request.POST.get("productBarcode")
+        year = request.POST.get("productyear")
+        ddc_no = request.POST.get("ddcNo")
+
+        #GET Image
+        book_image = request.FILES.get("book_image")
+
+        # 🔹 Status Fields
+        volume = request.POST.get("bookVolume")
+        pages = request.POST.get("bookPages")
+        edition = request.POST.get("bookEdition")
+
+        # 🔹 Foreign Keys (IMPORTANT)
+        catagory_id = request.POST.get("catagory")
+        publisher_id = request.POST.get("publisher")
+        author_id = request.POST.get("author")
+        library_id = request.POST.get("library")
+
+        # 🔹 Checkbox
+        is_active = request.POST.get("is_active") == "on"
+
+        # 🔹 Get FK objects
+        catagory = Catagory.objects.filter(id=catagory_id).first()
+        publisher = Publisher.objects.filter(id=publisher_id).first()
+        author = Author.objects.filter(id=author_id).first()
+        library = LibraryBranch.objects.filter(id=library_id).first()
+
+        # Library Specific Fields
+
+        shelf_no = request.POST.get("shelfNo")
+        added_by = request.POST.get("addedBy")
+        date_of_inclusion = request.POST.get("dateInclusion")
+        no_of_copy = request.POST.get("noOfCopy")
+
+        print("\n\n\n\n\n\n\n\nReceived Data:")  # ✅ Debugging print statement
+        print(pages, shelf_no, added_by, date_of_inclusion, no_of_copy)  # ✅ Debugging print statement
+        print("\n\n\n\n\n\n\n\nAll Post")
+        print(request.POST)
+
+
+
+        # ✅ Create Book
+        Book.objects.create(
+            B_title=title,
+            isbn=isbn,
+            call_no=call_no,
+            year=year if year else None,
+            ddc_no=ddc_no,
+
+            book_image = book_image,
+
+
+            catagory=catagory,
+            publisher=publisher,
+            author=author,
+            library=library,
+
+            volume=volume if volume else 1,
+            pages=pages if pages else None,
+            edition=edition if edition else None,
+
+            shelf_no=shelf_no,
+            added_by=added_by,
+            date_of_inclusion=date_of_inclusion if date_of_inclusion else None,
+            no_of_copy=no_of_copy if no_of_copy else 1,
+
+            is_active=is_active
+        )
+
+        return redirect('book_list')  # change to your list page
 
 
 

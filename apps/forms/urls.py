@@ -1,7 +1,9 @@
 from django.urls import path
+
+from config import settings
 from .views import FormsView
 from django.contrib.auth.decorators import login_required
-
+from django.conf.urls.static import static
 
 urlpatterns = [
     path(
@@ -55,3 +57,6 @@ urlpatterns = [
         name="forms-extras",
     ),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
